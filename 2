@@ -1,0 +1,102 @@
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+
+// Navigation Imports
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+// 1. Home Screen Component
+function HomeScreen({ navigation }) {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.headerText}>College App Home</Text>
+      <Text style={styles.subText}>Practical Exam: Question 4</Text>
+      
+      <TouchableOpacity 
+        style={styles.button} 
+        onPress={() => navigation.navigate('Details')}
+      >
+        <Text style={styles.buttonText}>Go to Details Screen</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+// 2. Details Screen Component
+function DetailsScreen({ navigation }) {
+  return (
+    <View style={[styles.container, { backgroundColor: '#f0f0f0' }]}>
+      <Text style={styles.headerText}>Details Screen</Text>
+      <Text style={styles.description}>
+        This screen was reached using Stack Navigation!
+      </Text>
+      
+      <TouchableOpacity 
+        style={[styles.button, { backgroundColor: '#e74c3c' }]} 
+        onPress={() => navigation.goBack()}
+      >
+        <Text style={styles.buttonText}>Go Back Home</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+// 3. Main Navigation Logic
+const Stack = createStackNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator 
+        initialRouteName="Home"
+        screenOptions={{
+          headerStyle: { backgroundColor: '#3498db' },
+          headerTintColor: '#fff',
+          headerTitleStyle: { fontWeight: 'bold' },
+        }}
+      >
+        {/* Define your screens here */}
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Details" component={DetailsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+// 4. Styles
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  headerText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#333',
+  },
+  subText: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 30,
+  },
+  description: {
+    fontSize: 14,
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  button: {
+    backgroundColor: '#3498db',
+    paddingVertical: 12,
+    paddingHorizontal: 25,
+    borderRadius: 8,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+});
