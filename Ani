@@ -1,0 +1,101 @@
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+
+export default function App() {
+  const [value, setValue] = useState("");
+  const [result, setResult] = useState("0");
+
+  const press = (text) => {
+    setValue(value + text);
+  };
+
+  const calculate = () => {
+    try {
+      setResult(eval(value).toString());
+    } catch {
+      setResult("Error");
+    }
+  };
+
+  const clear = () => {
+    setValue("");
+    setResult("0");
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.result}>{result}</Text>
+
+      <View style={styles.row}>
+        <Button text="7" onPress={() => press("7")} />
+        <Button text="8" onPress={() => press("8")} />
+        <Button text="9" onPress={() => press("9")} />
+        <Button text="/" onPress={() => press("/")} />
+      </View>
+
+      <View style={styles.row}>
+        <Button text="4" onPress={() => press("4")} />
+        <Button text="5" onPress={() => press("5")} />
+        <Button text="6" onPress={() => press("6")} />
+        <Button text="*" onPress={() => press("*")} />
+      </View>
+
+      <View style={styles.row}>
+        <Button text="1" onPress={() => press("1")} />
+        <Button text="2" onPress={() => press("2")} />
+        <Button text="3" onPress={() => press("3")} />
+        <Button text="-" onPress={() => press("-")} />
+      </View>
+
+      <View style={styles.row}>
+        <Button text="0" onPress={() => press("0")} />
+        <Button text="C" onPress={clear} />
+        <Button text="=" onPress={calculate} />
+        <Button text="+" onPress={() => press("+")} />
+      </View>
+    </View>
+  );
+}
+
+function Button({ text, onPress }) {
+  return (
+    <TouchableOpacity style={styles.button} onPress={onPress}>
+      <Text style={styles.buttonText}>{text}</Text>
+    </TouchableOpacity>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 20,
+  },
+
+  result: {
+    fontSize: 40,
+    textAlign: "right",
+    marginBottom: 30,
+  },
+
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 10,
+  },
+
+  button: {
+    backgroundColor: "#4da6ff",
+    width: 70,
+    height: 70,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+  },
+
+  buttonText: {
+    fontSize: 24,
+    color: "white",
+    fontWeight: "bold",
+  },
+});
